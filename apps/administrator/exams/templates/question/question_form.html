@@ -1,0 +1,10 @@
+{% extends "base/admin_form_base.html" %}
+{% block title %} Prova > {{ exam.name }} > {% if object %}{{ question.text }}{% else %}Novo{% endif %} {% endblock %}
+{% block back_button_url %}{% if object %}{% url 'question_detail' object.exam.id object.id %}{% else %}{% url 'exam_list' %}{% endif %}{% endblock %}
+{% block form %}
+  <input type="hidden" name="exam" value="{{ exam.pk }}">
+  <label for="id_text">
+    Texto: {{ form.text }}
+  </label>
+  <input type="submit" name="go" value="{% if object %} Atualizar {% else %} Adicionar {% endif %}">
+{% endblock %}

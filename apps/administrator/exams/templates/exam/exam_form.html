@@ -1,0 +1,13 @@
+{% extends "base/admin_form_base.html" %}
+{% block title %} Prova > {% if object %}{{ exam.name }}{% else %}Novo{% endif %} {% endblock %}
+{% block back_button_url %}{% if object %}{% url 'exam_detail' object.id %}{% else %}{% url 'exam_list' %}{% endif %}{% endblock %}
+{% block form %}
+  <input type="hidden" name="user" value="{{ user.pk }}">
+  <label for="id_name">
+    Nome: {{ form.name }}
+  </label>
+  <label for="id_date">
+    Data: <input type="date" name="date" id="id_date" value="{{ form.date.value|date:"Y-m-d" }}">
+  </label>
+  <input type="submit" name="go" value="{% if object %} Atualizar {% else %} Adicionar {% endif %}">
+{% endblock %}

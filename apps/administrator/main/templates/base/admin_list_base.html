@@ -1,0 +1,26 @@
+{% extends "base/admin_base.html" %}
+{% block content %}
+{% block search_form %}
+  <form class="" action=" " method="get">
+    <input type="text" name="search_term" value="{{ view.search_term }}">
+    <input type="submit" name="" value="Pesquisar">
+  </form>
+{% endblock %}
+{% block add_button %}
+  <a href="{% block add_button_url %}{% endblock %}">
+    {% block add_button_text %}Adicionar{% endblock %}
+  </a>
+{% endblock %}
+{% block list %}
+
+{% endblock %}
+{% block pagination %}
+  {% if is_paginated %}
+    {% if page_obj.has_previous %} {% endif %}
+    {% for n in paginator.page_range %}
+    <a class="pagination-list--link {% ifequal n page_obj.number %}pagination-list--link__active{% endifequal %}" href="{% block pagination_url %}{% endblock %}">{{ n }}</a>
+    {% endfor %}
+    {% if page_obj.has_next %} {% endif %}
+  {% endif %}
+{% endblock %}
+{% endblock %}

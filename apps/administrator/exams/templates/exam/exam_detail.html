@@ -1,0 +1,26 @@
+{% extends "base/admin_detail_base.html" %}
+{% block title %} Prova > {{ exam.name }} {% endblock %}
+{% block update_button_url %}{% url 'exam_update' exam.pk %}{% endblock %}
+{% block back_button_url %}{% url 'exam_list' %}{% endblock %}
+{% block details %}
+{% csrf_token %}
+<a href="{% url 'question_add' exam.pk %}">Nova Questão</a>
+<a href="">Ativar</a>
+
+<h1>{{ exam.name }}</h1>
+
+<h1>Perguntas</h1>
+{% for question in questions %}
+<a href="{% url 'question_detail' exam.pk question.pk %}">{{ question.text }}</a><br>
+{% endfor %}
+
+<script>
+{% for message in messages %}
+  {% if message.message == "instance_closed" %}
+    alert("Instância fechada com sucesso!");
+  {% elif message.message == "instance_deleted" %}
+    alert("Instância Removida com sucesso!");
+  {% endif %}
+{% endfor %}
+</script>
+{% endblock %}

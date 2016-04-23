@@ -1,0 +1,16 @@
+{% extends "base/admin_base.html" %}
+{% block content %}
+{% block back_button %}
+  <a href="{% block back_button_url %}{% endblock %}">
+    {% block back_button_text %}Voltar{% endblock %}
+  </a>
+{% endblock %}
+{% block update_button %}
+  <a href="{% block update_button_url %}{% endblock %}" onclick="{% block update_button_onclick %}{% endblock %}">
+    {% block update_button_text %}Atualizar{% endblock %}
+  </a>
+{% endblock %}
+{% block details %}
+
+{% endblock %}
+{% endblock %}

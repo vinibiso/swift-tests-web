@@ -1,0 +1,29 @@
+{% extends "base/admin_detail_base.html" %}
+{% block title %} Prova > {{ exam.name }} > {{ question.text }} {% endblock %}
+{% block update_button_url %}{% url 'question_update' exam.pk question.pk %}{% endblock %}
+{% block back_button_url %}{% url 'exam_detail' exam.pk %}{% endblock %}
+{% block details %}
+<a href="{% url 'alternative_add' exam.pk question.pk %}">Nova Alternativa</a>
+
+<h1>{{ question.name }}</h1>
+
+<h1>Alternativas</h1>
+{% for alternative in alternatives %}
+  <a href="{% url 'alternative_update' exam.pk question.pk alternative.pk %}">{{ alternative.text }}</a>
+  {% if alternative == question.right_alternative %}Certa!{% endif %}<br>
+{% endfor %}
+
+<script>
+{% for message in messages %}
+  {% if message.message == "question_create_success" %}
+    alert("Questão adicionada com sucesso!");
+  {% elif message.message == "question_update_success" %}
+    alert("Questão atualizada com sucesso!");
+  {% elif message.message == "alternative_create_success" %}
+    alert("Alternativa adicionada com sucesso!");
+  {% elif message.message == "alternative_update_success" %}
+    alert("Alternativa atualizada com sucesso!");
+  {% endif %}
+{% endfor %}
+</script>
+{% endblock %}
