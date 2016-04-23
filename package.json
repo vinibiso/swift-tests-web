@@ -1,0 +1,26 @@
+{
+  "name": "django-boilerplate",
+  "version": "1.2.0",
+  "description": "Layer's Django Boilerplate",
+  "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/layersoftware/django-boilerplate"
+  },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.1.0",
+    "del": ">= 2.0.2",
+    "gulp": ">= 3.9.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-postcss": "^6.0.1",
+    "gulp-sass": "^2.1.0",
+    "gulp-shell": ">= 0.5.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.5"
+  },
+  "license": "UNLICENSED"
+}

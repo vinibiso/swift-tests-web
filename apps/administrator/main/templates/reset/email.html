@@ -1,0 +1,12 @@
+Ola, <b>{{ user.first_name }}</b>
+<br><br>
+Alguem pediu para o password de {{ user.login }}({{ email }}) fosse trocado. Apenas siga as instruçoes no link abaixo:
+<br>
+<a href="{{ protocol}}://{{ domain }}{% url 'administrator-reset-confirm' uidb64=uid token=token %}">Clique aqui para resetar sua senha</a>
+<br>
+Se nao foi você, apenas ignore esse email.
+<br>
+<br>
+ps. o link é válido por 24 horas<br>
+Abraços,<br>
+Equipe {{ site_name }}

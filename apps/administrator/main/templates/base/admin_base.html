@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}  {% endblock %}</title>
+    {# <link rel="stylesheet" href="{% static "main/main.css" %}">#}
+    {# Imports JQuery and useful functions #}
+    <script src="{% static "main/js/main.js" %}" charset="utf-8"></script>
+    {% block extra %}{% endblock %}
+  </head>
+  <body>
+    {# start navbar #}
+    <div class="navbar">
+      <a href="{% url 'logout' %}">Pesquisas</a>
+    </div>
+    <br>{# Take this line out when starting styling #}
+    {# end navbar #}
+    {% block content %}
+
+    {% endblock %}
+  </body>
+</html>
