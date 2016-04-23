@@ -21,7 +21,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'apps.administrator.main',
-    'apps.administrator.exams'
+    'apps.administrator.exams',
     'apps.api'
 )
 
