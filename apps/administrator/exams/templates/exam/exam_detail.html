@@ -42,9 +42,13 @@ function confirmActivation() {
   {% elif message.message == "exam_closed" %}
     alert("Prova fechada com sucesso!");
   {% elif message.message == "exam_active_or_closed" %}
-    alert("Exames ativos ou fechados não podems ser atualizados ou excluidos");
+    alert("Provas ativas ou fechados não podems ser atualizados ou excluidos");
   {% elif message.message == "question_delete_success" %}
     alert("Questão deletada com sucesso!");
+  {% elif message.message == "create_success" %}
+    alert("Prova Criada com sucesso!");
+  {% elif message.message == "update_success" %}
+    alert("Prova Atualizada com sucesso!");
   {% endif %}
 {% endfor %}
 </script>

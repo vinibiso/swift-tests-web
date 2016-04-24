@@ -10,9 +10,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 # Project
+from apps.api.useful import make_response
 # Models
 from django.contrib.auth.models import User
-from .models import Exam, Question, Alternative
+from .models import Exam, Question, Alternative, Answer, Log
 # Forms
 from .forms import ExamForm, QuestionForm, AlternativeForm
 # Mixins
@@ -44,7 +45,7 @@ class DeleteSucessMessageMixing(object):
     def delete(self, request, *args, **kwargs):
         messages.add_message(request, messages.SUCCESS, self.success_message)
         return super(DeleteSucessMessageMixing, self).delete(request, *args, **kwargs)
-        
+
 # Lists all exams orderd by date and paginated
 class ExamList(LoginRequiredMixin, ListView):
     template_name = 'exam/exam_list.html'
@@ -174,6 +175,16 @@ class ExamActivateView(UsersExamMixin, LoginRequiredMixin, View):
         messages.add_message(request, messages.SUCCESS, 'exam_activated')
         return redirect('exam_report', exam = exam.pk)
 
+# View that closes a test to be synchronized
+class ExamCloseView(UsersExamMixin, LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        exam = get_object_or_404(Exam.objects.filter(active=True, closed=False), pk=kwargs['exam'])
+        exam.active = False
+        exam.closed = True
+        exam.save()
+        messages.add_message(request, messages.SUCCESS, 'exam_closed')
+        return redirect('exam_detail', exam = exam.pk)
+
 # Shows Exam Report
 class ExamReport(LoginRequiredMixin, UsersExamMixin, DetailView):
     template_name = 'exam/exam_report.html'
@@ -183,6 +194,38 @@ class ExamReport(LoginRequiredMixin, UsersExamMixin, DetailView):
         exam = get_object_or_404(Exam, pk=self.kwargs['exam'])
         return exam
 
-    def get_context_data(self, **kwargs):
-        context = super(ExamReport, self).get_context_data(**kwargs)
-        return context
+# Shows Exam Report
+class ExamReportData(LoginRequiredMixin, UsersExamMixin, DetailView):
+    template_name = ""
+    model = Exam
+
+    def get_object(self):
+        exam = get_object_or_404(Exam, pk=self.kwargs['exam'])
+        return exam
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        answers = self.object.answer_set.all().order_by('id')
+        response = serialize_answers(answers)
+        return make_response(response)
+
+def serialize_answers(answers):
+    new_answers = []
+    for a in answers:
+        new_answer = {
+            "name": a.name,
+            "grade": None if a.grade == None else float(a.grade),
+            "date": str(a.date),
+            "logs": []
+        }
+        for l in Log.objects.filter(answer = a).order_by("question__id"):
+            new_log = {
+                "question_id": l.question.id,
+                "question": l.question.text,
+                "alternative_id": None if l.alternative == None else l.alternative.id,
+                "alternative": "-" if l.alternative == None else l.alternative.text
+            }
+            new_answer['logs'].append(new_log)
+
+        new_answers.append(new_answer)
+    return new_answers

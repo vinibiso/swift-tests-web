@@ -2,13 +2,54 @@
 {% block title %} Prova > {{ exam.name }} {% endblock %}
 {% block update_button %}{% endblock %}
 {% block back_button_url %}{% url 'exam_detail' exam.pk %}{% endblock %}
+{% block delete_button %}{% endblock %}
 {% block details %}
 {% csrf_token %}
-<a href="">Fechar</a>
+{% if exam.active and not exam.closed %}
+<a onclick="confirmClosing()">Fechar</a>
+{% endif %}
 
 <h1>{{ exam.name }}</h1>
 
+<div id="answers-container"></div>
+
+{% verbatim %}
+<script id="answers-template" type="text/template">
+  {{#each answers}}
+  {{ name }} - {{ grade }} - {{ date date }}<br>
+  {{/each}}
+</script>
+{% endverbatim %}
+
 <script>
+
+answers_template = Handlebars.compile($("#answers-template").html());
+function loadAnswers() {
+  setupAjax();
+  $.ajax({
+    type: "POST",
+    url: "{% url 'exam_report_data' exam.id %}",
+    // Sending new causes the view to send geo data
+    data: {},
+    datatype: "json",
+    success: function (response) {
+      response = JSON.parse(response)
+      console.log("RELOADED");
+      $("#answers-container").html(answers_template({"answers": response}))
+    },
+    error: error
+  });
+}
+loadAnswers();
+{% if exam.active and not exam.closed %}
+function confirmClosing() {
+  if (confirm("Tem certeza que deseja fechar esse prova?")) {
+    location.href = "{% url 'exam_close' exam.pk %}"
+  }
+}
+setInterval(loadAnswers, 10000)
+{% endif %}
+
 {% for message in messages %}
   {% if message.message == "exam_activated" %}
     alert("Prova ativada com sucesso!");

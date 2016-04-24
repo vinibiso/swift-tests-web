@@ -1,0 +1,29 @@
+{% extends "base/admin_base.html" %}
+{% block content %}
+<form action="{% url 'api_send' %}" method="post">
+  <input type="submit" name="go" value="get_exam">
+</form>
+
+<button type="send_vote" onclick="sendVote()">send_vote</button>
+<script>
+  function sendVote() {
+    var answer = {
+      "exam": 3,
+      "name": "Novo Voto!",
+      "answers": [14, 16]
+    };
+
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'api_receive' %}",
+      data: {"answer": JSON.stringify(answer) },
+      datatype: "json",
+      success: function(response) {
+          console.log(response);
+      },
+      error: function(error) { console.log(error);}
+    });
+  }
+</script>
+{% endblock %}

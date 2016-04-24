@@ -18,7 +18,7 @@ class Exam(models.Model):
         verbose_name_plural = "Provas"
 
     def get_absolute_url(self):
-        return reverse('exam_update', kwargs={'exam': self.pk})
+        return reverse('exam_detail', kwargs={'exam': self.pk})
 
 class Question(models.Model):
     exam = models.ForeignKey(Exam, verbose_name="Prova")
@@ -54,3 +54,29 @@ class Alternative(models.Model):
             self.question.right_alternative = None
             self.question.save()
         super(Alternative, self).delete()
+
+class Answer(models.Model):
+    exam = models.ForeignKey(Exam, verbose_name="Prova")
+    name = models.CharField(max_length=100, verbose_name="Nome do Aluno")
+    grade = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Nota", blank=True, null=True, default=None)
+    answers = models.ManyToManyField(Question, through="Log", verbose_name="Respostas")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="Data Recebida")
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Resposta"
+        verbose_name_plural = "Resposta"
+
+class Log(models.Model):
+    answer = models.ForeignKey(Answer, verbose_name="Resposta")
+    question = models.ForeignKey(Question, verbose_name="Pergunta")
+    alternative = models.ForeignKey(Alternative, blank=True, null=True, verbose_name="Alternativa")
+
+    def __unicode__(self):
+        return self.answer.name
+
+    class Meta:
+        verbose_name = "Uma Resposta"
+        verbose_name_plural = "Uma Resposta"

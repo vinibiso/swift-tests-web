@@ -4,9 +4,9 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    url(r'^exames/', include('apps.administrator.exams.urls')),
+    url(r'^provas/', include('apps.administrator.exams.urls')),
     # Login, Logout, Password Reset and Change
-    url(r'^$', auth_views.login, {'template_name': 'login.html', 'extra_context': {'next': '/exams/'}}, name = 'login'),
+    url(r'^$', auth_views.login, {'template_name': 'login.html', 'extra_context': {'next': '/provas/'}}, name = 'login'),
     url(r'^logout/', auth_views.logout_then_login, name = 'logout'),
     url(r'^trocarsenha/sucesso/', auth_views.password_change_done, {'template_name': 'reset/password_change_done.html'}, name = 'change-done'),
     url(r'^trocarsenha/', auth_views.password_change, {'template_name': 'reset/password_change.html', 'post_change_redirect': '/trocarsenha/sucesso/'}, name = 'change'),
