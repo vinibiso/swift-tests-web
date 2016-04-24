@@ -1,0 +1,18 @@
+{% extends "base/admin_detail_base.html" %}
+{% block title %} Prova > {{ exam.name }} {% endblock %}
+{% block update_button %}{% endblock %}
+{% block back_button_url %}{% url 'exam_detail' exam.pk %}{% endblock %}
+{% block details %}
+{% csrf_token %}
+<a href="">Fechar</a>
+
+<h1>{{ exam.name }}</h1>
+
+<script>
+{% for message in messages %}
+  {% if message.message == "exam_activated" %}
+    alert("Prova ativada com sucesso!");
+  {% endif %}
+{% endfor %}
+</script>
+{% endblock %}

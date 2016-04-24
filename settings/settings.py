@@ -62,8 +62,8 @@ TEMPLATES = [
 ]
 
 # Defaul configs for Administrator to work
-LOGIN_URL = '/administrador/login/'
-LOGOUT_URL = '/administrador/logout/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 # Production Database

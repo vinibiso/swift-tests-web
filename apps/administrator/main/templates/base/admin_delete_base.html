@@ -1,0 +1,13 @@
+{% extends "base/admin_base.html" %}
+{% block content %}
+{% block back_button %}
+  <a href="{% block back_button_url %}{% endblock %}">
+    {% block back_button_text %}Voltar{% endblock %}
+  </a>
+{% endblock %}
+<form action="" method="post">
+  {% csrf_token %}
+  <p>Tem certeiza que deseja deletar "{{ object }}"?</p>
+  <input type="submit" value="Confirmar" />
+</form>
+{% endblock %}

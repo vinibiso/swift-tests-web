@@ -4,7 +4,7 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    url(r'^exams/', include('apps.administrator.exams.urls')),
+    url(r'^exames/', include('apps.administrator.exams.urls')),
     # Login, Logout, Password Reset and Change
     url(r'^$', auth_views.login, {'template_name': 'login.html', 'extra_context': {'next': '/exams/'}}, name = 'login'),
     url(r'^logout/', auth_views.logout_then_login, name = 'logout'),

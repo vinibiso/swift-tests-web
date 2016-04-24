@@ -1,0 +1,3 @@
+{% extends "base/admin_delete_base.html" %}
+{% block title %} Prova > {{ question.exam.name }} > {{ question.text }} {% endblock %}
+{% block back_button_url %}{% url 'question_detail' question.exam.id question.id %}{% endblock %}

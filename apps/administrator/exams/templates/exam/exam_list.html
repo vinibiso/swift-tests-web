@@ -6,4 +6,13 @@
   <a href="{% url 'exam_detail' obj.pk %}">{{ obj.name }}</a><br>
   {% endfor %}
 {% endblock %}
+{% block extra_content %}
+<script>
+{% for message in messages %}
+  {% if message.message == "exam_delete_success" %}
+    alert("Prova deletada com sucesso!");
+  {% endif %}
+{% endfor %}
+</script>
+{% endblock %}
 {% block pagination_url %}{% url 'exam_list_admin_pag' n %}{% endblock %}

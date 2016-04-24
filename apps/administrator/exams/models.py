@@ -8,6 +8,7 @@ class Exam(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nome")
     date = models.DateField(verbose_name="Data")
     active = models.BooleanField(default=False, verbose_name="Ativo?")
+    closed = models.BooleanField(default=False, verbose_name="Fechada?")
 
     def __unicode__(self):
         return self.name
@@ -47,3 +48,9 @@ class Alternative(models.Model):
 
     def get_absolute_url(self):
         return reverse('question_detail', kwargs={'exam': self.question.exam.pk, 'pk': self.question.pk})
+
+    def delete(self):
+        if self.question.right_alternative == self:
+            self.question.right_alternative = None
+            self.question.save()
+        super(Alternative, self).delete()

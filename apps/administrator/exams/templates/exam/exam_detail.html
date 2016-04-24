@@ -1,25 +1,50 @@
 {% extends "base/admin_detail_base.html" %}
 {% block title %} Prova > {{ exam.name }} {% endblock %}
 {% block update_button_url %}{% url 'exam_update' exam.pk %}{% endblock %}
+{% block delete_button_url %}{% url 'exam_delete' exam.pk %}{% endblock %}
 {% block back_button_url %}{% url 'exam_list' %}{% endblock %}
 {% block details %}
 {% csrf_token %}
-<a href="{% url 'question_add' exam.pk %}">Nova Questão</a>
-<a href="">Ativar</a>
+
+{# Only show options that the user can do! #}
+{% if not exam.active and not exam.closed %}
+  <a href="{% url 'question_add' exam.pk %}">Nova Questão</a>
+{% endif %}
 
 <h1>{{ exam.name }}</h1>
 
+{% if exam.active and not exam.closed %}
+  Prova Ativa! <a href="{% url 'exam_report' exam.pk %}">Acompanhe as Notas!</a>
+{% elif not exam.active and exam.closed %}
+  Prova Fechada! <a href="{% url 'exam_report' exam.pk %}">Veja as Notas!</a>
+{% else %}
+  Em Construção!
+  <a onclick="confirmActivation()">Ativar</a>
+{% endif %}
+
 <h1>Perguntas</h1>
 {% for question in questions %}
-<a href="{% url 'question_detail' exam.pk question.pk %}">{{ question.text }}</a><br>
+<a href="{% url 'question_detail' exam.pk question.pk %}">{{ question.text }}</a>
+{% if question.right_alternative != None %}Pronta!{% endif %}
+<br>
 {% endfor %}
 
 <script>
+function confirmActivation() {
+  if (confirm("Tem certeza que deseja activa esse prova?\nVocê não poderá mais editá-la")) {
+    location.href = "{% url 'exam_activate' exam.pk %}"
+  }
+}
+
 {% for message in messages %}
-  {% if message.message == "instance_closed" %}
-    alert("Instância fechada com sucesso!");
-  {% elif message.message == "instance_deleted" %}
-    alert("Instância Removida com sucesso!");
+  {% if message.message == "answers_not_in" %}
+    alert("Todas as perguntas devem ter uma alternativa certa");
+  {% elif message.message == "exam_closed" %}
+    alert("Prova fechada com sucesso!");
+  {% elif message.message == "exam_active_or_closed" %}
+    alert("Exames ativos ou fechados não podems ser atualizados ou excluidos");
+  {% elif message.message == "question_delete_success" %}
+    alert("Questão deletada com sucesso!");
   {% endif %}
 {% endfor %}
 </script>

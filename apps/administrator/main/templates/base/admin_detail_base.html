@@ -10,6 +10,11 @@
     {% block update_button_text %}Atualizar{% endblock %}
   </a>
 {% endblock %}
+{% block delete_button %}
+  <a href="{% block delete_button_url %}{% endblock %}" onclick="{% block delete_button_onclick %}{% endblock %}">
+    {% block delete_button_text %}Deletar{% endblock %}
+  </a>
+{% endblock %}
 {% block details %}
 
 {% endblock %}
