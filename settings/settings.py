@@ -116,6 +116,9 @@ SITE_NAME = "YOUR WEBSITE NAME"
 # Set Site id of SitesFramework
 SITE_ID = 2
 
+# API settings
+API_ON = True
+
 # Logging configs
 LOGGING = {
     'version': 1,

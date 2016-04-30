@@ -2,6 +2,7 @@
 import json
 import traceback
 # Django
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
 # Project
@@ -9,6 +10,18 @@ from apps.administrator.exams.models import Exam, Question, Alternative, Answer,
 # Module
 from .mixins import NoCSRFMixin
 from .useful import make_response
+
+# Ping API
+class Ping(NoCSRFMixin, View):
+    def post(self, request, *args, **kwargs):
+        if settings.API_ON:
+            return make_response({"message": "UP"})
+        return make_response({"message": "DOWN"})
+
+    def get(self, request, *args, **kwargs):
+        if settings.API_ON:
+            return make_response({"message": "UP"})
+        return make_response({"message": "DOWN"})
 
 # Returns a new EXAM one is active
 class SendExamView(NoCSRFMixin, View):
