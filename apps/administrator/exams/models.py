@@ -23,7 +23,7 @@ class Exam(models.Model):
 class Question(models.Model):
     exam = models.ForeignKey(Exam, verbose_name="Prova")
     text = models.CharField(max_length=100, verbose_name="Texto")
-    right_alternative = models.ForeignKey("Alternative", related_name="question_right_alternative", blank=True, null=True, default=None)
+    right_alternative = models.OneToOneField("Alternative", related_name="question_right_alternative", blank=True, null=True, default=None)
 
     def __unicode__(self):
         return self.text

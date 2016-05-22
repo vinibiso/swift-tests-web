@@ -35,18 +35,20 @@ class SendExamView(NoCSRFMixin, View):
         return make_response(response)
 
 # Receives a new answer to an Exam
-class ReceiveVoteView(NoCSRFMixin, View):
+class q(NoCSRFMixin, View):
     def post(self, request, *args, **kwargs):
         response = {"message": "OK"}
         answer = json.loads(request.POST.get("answer"))
         # Try to get the Exam or return CLOSED
         try:
             exam = Exam.objects.get(id = answer["exam"], active = True, closed = False)
+            new_aswer_id = None
             try:
                 # Load and save the answers
                 valid_alternatives = Alternative.objects.filter(question__exam = exam)
                 new_aswer = Answer(name = answer['name'], exam = exam)
                 new_aswer.save()
+                new_aswer_id = new_aswer.id
                 for a in answer['answers']:
                     alternative = valid_alternatives.get(id = a)
                     Log(answer = new_aswer, question = alternative.question, alternative=alternative).save()
@@ -64,6 +66,8 @@ class ReceiveVoteView(NoCSRFMixin, View):
                 new_aswer.save()
             except Exception as e:
                 print traceback.format_exc()
+                if new_aswer_id != None:
+                    Answer.objects.get(id = new_aswer_id).delete()
                 response["message"] = "ERROR"
                 pass
         except Exception as e:
