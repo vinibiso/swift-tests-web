@@ -24,7 +24,7 @@ python manage.py runserver
   - [When .gitignore is not working](http://stackoverflow.com/questions/1139762/ignore-files-that-have-already-been-committed-to-a-git-repository)
 
 ## License
-**It's Layer's YOU MOTHER FUCKER!**
+MIT
 
 ## Additional Info.
 ### If you need the user to be loged in to make user of a view
