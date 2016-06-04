@@ -35,7 +35,7 @@ class SendExamView(NoCSRFMixin, View):
         return make_response(response)
 
 # Receives a new answer to an Exam
-class q(NoCSRFMixin, View):
+class ReceiveVoteView(NoCSRFMixin, View):
     def post(self, request, *args, **kwargs):
         response = {"message": "OK"}
         answer = json.loads(request.POST.get("answer"))
