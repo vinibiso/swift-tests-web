@@ -166,6 +166,7 @@ class AlternativeDelete(DeleteSucessMessageMixing, ExamNotActiveOrClosedMixin, L
 class ExamActivateView(UsersExamMixin, LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         exam = get_object_or_404(Exam.objects.filter(active=False, closed=False), pk=kwargs['exam'])
+        Exam.objects.filter(active=True, closed=False).update(active=False, closed=True)
         for question in exam.question_set.all():
             if question.right_alternative == None:
                 messages.add_message(request, messages.ERROR, 'answers_not_in')

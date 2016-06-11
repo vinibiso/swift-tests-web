@@ -15,7 +15,7 @@ urlpatterns = [
             'email_template_name': 'reset/nohtmlemail.html',
             'subject_template_name': 'reset/subject.txt',
             'post_reset_redirect': '/emailenviado/',
-            'from_email': 'Layer | Site <layerdd@gmail.com>',
+            'from_email': '',
             'html_email_template_name': 'reset/email.html'
         }, name = 'reset'),
     url(r'^emailenviado/', auth_views.password_reset_done, {'template_name': 'reset/password_reset_done.html', }, name = 'reset-email-sent'),

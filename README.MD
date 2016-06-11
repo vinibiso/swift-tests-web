@@ -1,51 +1,32 @@
 # Switf Tests (Web)
 
-This a two part application that aims to make the applications of exams quicker through web system and a tablet hybrid app.
+Sistema de criação de exercicios e provas através de uma interface web para interagir com o [aplicativo](https://github.com/vinibiso/swift-tests-app).
 
-## Do
-- Install dependencies with:
+## Requerimentos Pré-instalação
+- Python 2.7
+- Pip ([Como instalar PIP ](https://pip.pypa.io/en/stable/installing/))
+
+## Instalar
+
+- Para instalar as dependencias é apenas necessário:
 
 ```shell
   pip install -r requirements.txt
-  npm install
 ```
-- Then Run:
+
+- Para Rodar o projeto:
 
 ```shell
-python manage.py migrate
-python manage.py runserver
+python manage.py runserver 0.0.0.0:8080
 ```
 
-## Links
-- **Django**
-  - [Model Fields Reference](https://docs.djangoproject.com/en/1.8/topics/db/models/)
-  - [Authentication Sytem](https://docs.djangoproject.com/en/1.8/topics/auth/default/)
-- **Git**
-  - [When .gitignore is not working](http://stackoverflow.com/questions/1139762/ignore-files-that-have-already-been-committed-to-a-git-repository)
+- Já existe uma prova ativa para testar, basta instalar o aplicativo e abrir o mesmo;
+- Caso queira criar sua própria basta:
+  - Acesse "localhost:8080"
+  - Dados de Acesso
+    - Usuário: admin
+    - Senha: admin
+  - Você pode criar sua prova desde e o começo. Mas Não esqueça de que um prova precisa ter pelo menos uma questão com pelo menos um alternativa correta. E para que você possa executar sua pesquisa no aplicativo é necessário ativa-la;
 
-## License
+## Licença
 MIT
-
-## Additional Info.
-### If you need the user to be loged in to make user of a view
-```python
-@login_required(redirect_field_name='proximo')
-```
-### You can create a new permission in a model's Meta class
-### For Example:
-```python
-class Task(models.Model):
-    ...
-    class Meta:
-        permissions = (
-            ("view_task", "Can see available tasks"),
-        )
-```
-### You can you it in a view with:
-```python
-request.user.has_perm('task.view_task')
-```
-### Or you can use the decorator permission_required like so:
-```python
-permission_required('task.view_task')
-```
