@@ -5,12 +5,13 @@
 {% block back_button_url %}{% url 'exam_detail' exam.pk %}{% endblock %}
 {% block details %}
 
-<h1>{{ question.name }}</h1>
+<h1>{{ question.text }}</h1>
 
 {# Only show options that the user can do! #}
 {% if not exam.active and not exam.closed %}
   <a href="{% url 'alternative_add' exam.pk question.pk %}">Nova Alternativa</a>
 {% endif %}
+
 
 <h1>Alternativas</h1>
 {% for alternative in alternatives %}
