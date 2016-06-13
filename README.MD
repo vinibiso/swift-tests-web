@@ -28,5 +28,9 @@ python manage.py runserver 0.0.0.0:8080
     - Senha: admin
   - Você pode criar sua prova desde e o começo. Mas Não esqueça de que um prova precisa ter pelo menos uma questão com pelo menos um alternativa correta. E para que você possa executar sua pesquisa no aplicativo é necessário ativa-la;
 
+## Aplicativo
+
+Você poder acessar o aplicativo [aqui](https://github.com/vinibiso/swift-tests-app) ou fazer o download direto [aqui](https://github.com/vinibiso/swift-tests-app/raw/master/builds/android-debug.apk)
+
 ## Licença
 MIT
